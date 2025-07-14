@@ -1,0 +1,17 @@
+export enum AccessPolicy {
+  ConfigurationRead = 'account_policy:read:configuration',
+  ConfigurationWrite = 'account_policy:write:configuration',
+  AccountRead = 'account_policy:read:account',
+  AccountWrite = 'account_policy:write:account',
+  CharacterRead = 'account_policy:read:character',
+  CharacterWrite = 'account_policy:write:character',
+  ReferenceRead = 'account_policy:read:reference',
+  SessionRead = 'account_policy:read:session',
+  SegmentDefinitionRead = 'account_policy:read:segment_definition',
+  SegmentDefinitionWrite = 'account_policy:write:segment_definition',
+  SegmentWrite = 'account_policy:write:segment',
+  SegmentRead = 'account_policy:read:segment',
+  MetricRead = 'account_policy:read:metric',
+  LocalizationRead = 'account_policy:read:localization',
+  LocalizationWrite = 'account_policy:write:localization',
+}
