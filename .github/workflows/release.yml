@@ -30,7 +30,22 @@ jobs:
       # 6. Run tests
       - run: npm test
 
-      # 7. Publish to npm (will pack dist/ per your `files` + exports)
-      - run: npm publish
+      # 7) Figure out which npm dist‐tag to use
+      - name: Decide npm tag
+        id: dist_tag
+        run: |
+          # strip the "refs/tags/" prefix
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "Version is $VERSION"
+          if [[ "$VERSION" == *-* ]]; then
+          # any hyphen in semver → prerelease
+          echo "tag=next" >> $GITHUB_OUTPUT
+          else
+          echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+
+      # 8) Publish to npm under the chosen tag
+      - name: Publish to npm
+        run: npm publish --tag ${{ steps.dist_tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
