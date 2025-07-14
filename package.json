@@ -1,6 +1,6 @@
 {
   "name": "@bitzonegaming/roleplay-engine-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Roleplay Engine SDK",
   "main": "index.js",
   "homepage": "https://bitzone.com",
@@ -30,6 +30,9 @@
   },
   "dependencies": {
     "axios": "^1.10.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
