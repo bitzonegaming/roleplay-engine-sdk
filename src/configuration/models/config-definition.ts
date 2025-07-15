@@ -1,16 +1,11 @@
 import { ConfigKey } from './config-keys';
-import {
-  ConfigGroupToggle,
-  ConfigRegex,
-  ConfigSecret,
-  ConfigSelectOption,
-  ConfigTypes,
-} from './config-types';
+import { ConfigGroupToggle, ConfigRegex, ConfigSecret, ConfigSelectOption } from './config-types';
 
-export interface ConfigDefinitionsMap extends Record<keyof typeof ConfigKey, ConfigTypes> {
+export interface ConfigDefinitionsMap {
   // GENERAL
   Name: string;
   Platform: ConfigSelectOption;
+  ScpAddress: string;
   PlayerSlot: number;
   DefaultLanguage: ConfigSelectOption;
 

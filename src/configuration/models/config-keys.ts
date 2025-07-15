@@ -2,6 +2,7 @@ export enum ConfigKey {
   // GENERAL
   Name = 'NAME',
   Platform = 'PLATFORM',
+  ScpAddress = 'SCP_ADDRESS',
   PlayerSlot = 'PLAYER_SLOT',
   DefaultLanguage = 'DEFAULT_LANGUAGE',
 
@@ -105,6 +106,7 @@ export const configKeyToGroup: ConfigKeyToGroupMap = {
   // GENERAL
   Name: ConfigGroupKey.General,
   Platform: ConfigGroupKey.General,
+  ScpAddress: ConfigGroupKey.General,
   PlayerSlot: ConfigGroupKey.General,
   DefaultLanguage: ConfigGroupKey.General,
 
