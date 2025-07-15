@@ -4,6 +4,9 @@ import { Account } from './models/account';
 import { AccountAuthRequest } from './models/account-auth-request';
 import { GrantAccessResult } from './models/grant-access-result';
 import { Character } from '../character/models/character';
+import { ExternalLoginPreAuthRequest } from './models/external-login-pre-auth-request';
+import { ExternalLoginPreAuthResult } from './models/external-login-pre-auth-result';
+import { ExternalLoginAuthRequest } from './models/external-login-auth-request';
 
 export class AccountApi {
   constructor(private readonly client: EngineClient) {}
@@ -81,6 +84,42 @@ export class AccountApi {
     return this.client.get<Character[]>({
       url: `accounts/${accountId}/characters`,
       query,
+      options,
+    });
+  }
+
+  /**
+   * Pre-authenticates a player for external login. This endpoint is used to initiate the external login flow.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:player_auth
+   * @summary External login pre-authentication
+   * @param {ExternalLoginPreAuthRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public preAuthExternalLogin(
+    request: ExternalLoginPreAuthRequest,
+    options?: ApiOptions,
+  ): Promise<ExternalLoginPreAuthResult> {
+    return this.client.post<ExternalLoginPreAuthRequest, ExternalLoginPreAuthResult>({
+      url: 'accounts/external-login/pre-auth',
+      data: request,
+      options,
+    });
+  }
+
+  /**
+   * Authenticates a player using external login credentials. This endpoint is used to complete the external login flow.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:player_auth
+   * @summary External login authentication
+   * @param {ExternalLoginAuthRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public authExternalLogin(
+    request: ExternalLoginAuthRequest,
+    options?: ApiOptions,
+  ): Promise<GrantAccessResult> {
+    return this.client.post<ExternalLoginPreAuthRequest, GrantAccessResult>({
+      url: 'accounts/external-login/auth',
+      data: request,
       options,
     });
   }

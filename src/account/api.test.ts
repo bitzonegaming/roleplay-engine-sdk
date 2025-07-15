@@ -8,6 +8,9 @@ import { GrantAccessResult } from './models/grant-access-result';
 import { Character } from '../character/models/character';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { ExternalLoginAuthRequest } from './models/external-login-auth-request';
+import { ExternalLoginPreAuthResult } from './models/external-login-pre-auth-result';
+import { ExternalLoginPreAuthRequest } from './models/external-login-pre-auth-request';
 
 describe('AccountApi', () => {
   const apiUrl = 'http://mock-api';
@@ -170,6 +173,57 @@ describe('AccountApi', () => {
 
       const result = await api.getAccountCharacters(accountId, { includeAppearance: true });
       expect(result).toEqual(mockChars);
+    });
+  });
+
+  describe('preAuthExternalLogin()', () => {
+    it('should POST /accounts/external-login/pre-auth and return pre-auth result', async () => {
+      const req: ExternalLoginPreAuthRequest = {
+        email: 'user@email.com',
+        password: 'p@ss',
+      };
+      const mockResult: ExternalLoginPreAuthResult = {
+        externalId: 'external123',
+        email: 'user@email.com',
+        username: undefined,
+        emailInputRequired: false,
+        usernameInputRequired: true,
+      };
+
+      baseScope
+        .post('/accounts/external-login/pre-auth', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(200, mockResult);
+
+      const result = await api.preAuthExternalLogin(req);
+      expect(result).toEqual(mockResult);
+    });
+  });
+
+  describe('authExternalLogin()', () => {
+    it('should POST /accounts/external-login/auth and return GrantAccessResult', async () => {
+      const req: ExternalLoginAuthRequest = {
+        email: 'user@email.com',
+        password: 'p@ss',
+      };
+      const mockGrant: GrantAccessResult = {
+        access_token: 'xtok456',
+        expires_in: 7200,
+        account_id: 'acc456',
+        token_type: 'Bearer',
+      };
+
+      baseScope
+        .post('/accounts/external-login/auth', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(200, mockGrant);
+
+      const result = await api.authExternalLogin(req);
+      expect(result).toEqual(mockGrant);
     });
   });
 });
