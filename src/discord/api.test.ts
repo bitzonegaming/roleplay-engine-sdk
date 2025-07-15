@@ -7,6 +7,7 @@ import { DiscordOAuthTokenRequest } from './models/discord-oauth-token-request';
 import { GrantAccessResult } from '../account/models/grant-access-result';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { DiscordOAuthRedirectType } from './models/discord-oauth-redirect-type';
 
 describe('DiscordApi', () => {
   const apiUrl = 'http://mock-api';
@@ -93,6 +94,7 @@ describe('DiscordApi', () => {
     it('should perform OAuth Discord auth and return grant access result', async () => {
       const req: DiscordOAuthTokenRequest = {
         code: 'oauthcode',
+        redirectType: DiscordOAuthRedirectType.SCP,
       };
       const mockGrant: GrantAccessResult = {
         access_token: 'oauthToken',

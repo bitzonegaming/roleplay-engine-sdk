@@ -1,3 +1,5 @@
+import { DiscordOAuthRedirectType } from './discord-oauth-redirect-type';
+
 /**
  *
  * @export
@@ -10,4 +12,11 @@ export interface DiscordOAuthTokenRequest {
    * @memberof DiscordOAuthTokenRequest
    */
   code: string;
+
+  /**
+   * Redirect type where the user was sent after consent. (GAME or SCP)
+   * @type {DiscordOAuthRedirectType}
+   * @memberof DiscordOAuthTokenRequest
+   */
+  redirectType: DiscordOAuthRedirectType;
 }
