@@ -1,6 +1,7 @@
 import { AccessPolicyItem } from './access-policy-item';
 
 export enum AccessPolicyGroupCode {
+  Scp = 'account_policy:group:scp',
   Configuration = 'account_policy:group:configuration',
   Localization = 'account_policy:group:localization',
   Account = 'account_policy:group:account',

@@ -1,4 +1,5 @@
 export enum AccessPolicy {
+  ScpAccess = 'account_policy:scp_access',
   ConfigurationRead = 'account_policy:read:configuration',
   ConfigurationWrite = 'account_policy:write:configuration',
   AccountRead = 'account_policy:read:account',
