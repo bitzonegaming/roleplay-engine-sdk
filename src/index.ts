@@ -11,6 +11,7 @@ export * from './account/models/account-sign-in-method';
 export * from './account/models/account-sign-in-option';
 export * from './account/models/account';
 export * from './account/models/external-login-auth-request';
+export * from './account/models/external-login-identifier-type';
 export * from './account/models/external-login-pre-auth-request';
 export * from './account/models/external-login-pre-auth-result';
 export * from './account/models/grant-access-result';
