@@ -8,8 +8,8 @@ export interface ConfigSelectOptionValue {
 }
 
 export type Config = {
-  [K in keyof typeof ConfigKey]: {
-    key: (typeof ConfigKey)[K];
+  [K in ConfigKey]: {
+    key: K;
     value: ConfigDefinitionsMap[K];
     name?: string;
     description?: string;
@@ -17,4 +17,4 @@ export type Config = {
     editable: boolean;
     options?: ConfigSelectOptionValue[];
   };
-}[keyof typeof ConfigKey];
+}[ConfigKey];

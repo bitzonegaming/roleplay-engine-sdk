@@ -3,80 +3,80 @@ import { ConfigGroupToggle, ConfigRegex, ConfigSecret, ConfigSelectOption } from
 
 export interface ConfigDefinitionsMap {
   // GENERAL
-  Name: string;
-  Platform: ConfigSelectOption;
-  ScpAddress: string;
-  PlayerSlot: number;
-  DefaultLanguage: ConfigSelectOption;
+  [ConfigKey.Name]: string;
+  [ConfigKey.Platform]: ConfigSelectOption;
+  [ConfigKey.ScpAddress]: string;
+  [ConfigKey.PlayerSlot]: number;
+  [ConfigKey.DefaultLanguage]: ConfigSelectOption;
 
   // NOTIFICATION - SMTP
-  SmtpEnabled: ConfigGroupToggle;
-  SmtpServerHost: string;
-  SmtpServerPort: number;
-  SmtpServerUseSsl: boolean;
-  SmtpVerificationEmailEnabled: ConfigGroupToggle;
-  SmtpVerificationEmailAccountUsername: string;
-  SmtpVerificationEmailAccountPassword: ConfigSecret;
-  SmtpVerificationEmailAccountFromMail: string;
-  SmtpVerificationEmailAccountFromName: string;
+  [ConfigKey.SmtpEnabled]: ConfigGroupToggle;
+  [ConfigKey.SmtpServerHost]: string;
+  [ConfigKey.SmtpServerPort]: number;
+  [ConfigKey.SmtpServerUseSsl]: boolean;
+  [ConfigKey.SmtpVerificationEmailEnabled]: ConfigGroupToggle;
+  [ConfigKey.SmtpVerificationEmailAccountUsername]: string;
+  [ConfigKey.SmtpVerificationEmailAccountPassword]: ConfigSecret;
+  [ConfigKey.SmtpVerificationEmailAccountFromMail]: string;
+  [ConfigKey.SmtpVerificationEmailAccountFromName]: string;
 
   // ACCOUNT - AUTH
-  AccountEmailRequired: boolean;
-  AccountUsernameRegex: ConfigRegex;
-  AccountPasswordRegex: ConfigRegex;
-  AccountEmailVerificationRequired: boolean;
-  AuthTokenLifetimeInMinutes: number;
+  [ConfigKey.AccountEmailRequired]: boolean;
+  [ConfigKey.AccountUsernameRegex]: ConfigRegex;
+  [ConfigKey.AccountPasswordRegex]: ConfigRegex;
+  [ConfigKey.AccountEmailVerificationRequired]: boolean;
+  [ConfigKey.AuthTokenLifetimeInMinutes]: number;
 
   // ACCOUNT - AUTH - DISCORD LOGIN FLOW
-  DiscordLoginFlowEnabled: ConfigGroupToggle;
-  DiscordLoginFlowAutoLogin: boolean;
-  DiscordLoginFlowInGameMethod: ConfigSelectOption;
-  DiscordLoginFlowBotToken: ConfigSecret;
-  DiscordLoginFlowGuildId: string;
-  DiscordLoginFlowWhitelistRoleId: ConfigSelectOption;
-  DiscordLoginFlowOAuthClientId: string;
-  DiscordLoginFlowOAuthClientSecret: ConfigSecret;
+  [ConfigKey.DiscordLoginFlowEnabled]: ConfigGroupToggle;
+  [ConfigKey.DiscordLoginFlowAutoLogin]: boolean;
+  [ConfigKey.DiscordLoginFlowInGameMethod]: ConfigSelectOption;
+  [ConfigKey.DiscordLoginFlowBotToken]: ConfigSecret;
+  [ConfigKey.DiscordLoginFlowGuildId]: string;
+  [ConfigKey.DiscordLoginFlowWhitelistRoleId]: ConfigSelectOption;
+  [ConfigKey.DiscordLoginFlowOAuthClientId]: string;
+  [ConfigKey.DiscordLoginFlowOAuthClientSecret]: ConfigSecret;
 
   // ACCOUNT - AUTH - USERNAME PASSWORD FLOW
-  UsernamePasswordFlowEnabled: ConfigGroupToggle;
-  UsernamePasswordFlowRegistrationEnabled: boolean;
+  [ConfigKey.UsernamePasswordFlowEnabled]: ConfigGroupToggle;
+  [ConfigKey.UsernamePasswordFlowRegistrationEnabled]: boolean;
 
   // ACCOUNT - AUTH - EXTERNAL LOGIN FLOW
-  ExternalLoginFlowEnabled: ConfigGroupToggle;
-  ExternalLoginFlowApiAddress: string;
-  ExternalLoginFlowApiKey: ConfigSecret;
-  ExternalLoginFlowIdentifierType: ConfigSelectOption;
-  ExternalLoginFlowUseExternalInfo: boolean;
+  [ConfigKey.ExternalLoginFlowEnabled]: ConfigGroupToggle;
+  [ConfigKey.ExternalLoginFlowApiAddress]: string;
+  [ConfigKey.ExternalLoginFlowApiKey]: ConfigSecret;
+  [ConfigKey.ExternalLoginFlowIdentifierType]: ConfigSelectOption;
+  [ConfigKey.ExternalLoginFlowUseExternalInfo]: boolean;
 
   // CHARACTER
-  MotivesSystemEnabled: ConfigGroupToggle;
+  [ConfigKey.MotivesSystemEnabled]: ConfigGroupToggle;
 
   // CHARACTER - GENERAL
-  CharacterMinAge: number;
-  CharacterMaxAge: number;
-  CharacterFirstNameMinLength: number;
-  CharacterFirstNameMaxLength: number;
-  CharacterLastNameMinLength: number;
-  CharacterLastNameMaxLength: number;
-  CharacterFullNameValidationPattern: ConfigRegex;
-  CharacterNameForbiddenWords: string;
-  CharacterNationalityEnabled: boolean;
-  CharacterMaxPerAccount: number;
-  CharacterDefaultHunger: number;
-  CharacterDefaultThirst: number;
-  CharacterDefaultEnergy: number;
-  CharacterDefaultHealth: number;
-  CharacterDefaultMood: number;
+  [ConfigKey.CharacterMinAge]: number;
+  [ConfigKey.CharacterMaxAge]: number;
+  [ConfigKey.CharacterFirstNameMinLength]: number;
+  [ConfigKey.CharacterFirstNameMaxLength]: number;
+  [ConfigKey.CharacterLastNameMinLength]: number;
+  [ConfigKey.CharacterLastNameMaxLength]: number;
+  [ConfigKey.CharacterFullNameValidationPattern]: ConfigRegex;
+  [ConfigKey.CharacterNameForbiddenWords]: string;
+  [ConfigKey.CharacterNationalityEnabled]: boolean;
+  [ConfigKey.CharacterMaxPerAccount]: number;
+  [ConfigKey.CharacterDefaultHunger]: number;
+  [ConfigKey.CharacterDefaultThirst]: number;
+  [ConfigKey.CharacterDefaultEnergy]: number;
+  [ConfigKey.CharacterDefaultHealth]: number;
+  [ConfigKey.CharacterDefaultMood]: number;
 
   // CHARACTER - MOTIVES THRESHOLDS
-  CharacterMotivesCriticalThreshold: number;
-  CharacterMotivesHealthyHungerThreshold: number;
-  CharacterMotivesHealthyThirstThreshold: number;
-  CharacterMotivesHealthyEnergyThreshold: number;
-  CharacterMotivesHealthyHealthThreshold: number;
-  CharacterMotivesHealthyMoodThreshold: number;
+  [ConfigKey.CharacterMotivesCriticalThreshold]: number;
+  [ConfigKey.CharacterMotivesHealthyHungerThreshold]: number;
+  [ConfigKey.CharacterMotivesHealthyThirstThreshold]: number;
+  [ConfigKey.CharacterMotivesHealthyEnergyThreshold]: number;
+  [ConfigKey.CharacterMotivesHealthyHealthThreshold]: number;
+  [ConfigKey.CharacterMotivesHealthyMoodThreshold]: number;
 }
 
 export type ConfigDefinitions = {
-  [K in keyof typeof ConfigKey]: ConfigDefinitionsMap[K];
+  [K in ConfigKey]: ConfigDefinitionsMap[K];
 };

@@ -121,8 +121,8 @@ describe('ConfigurationApi', () => {
   describe('updateConfiguration()', () => {
     it('should PATCH /configuration with correct body', async () => {
       const req: UpdateConfigurationRequest = {
-        Name: { type: ConfigType.String, value: 'UpdatedApp' },
-        PlayerSlot: { type: ConfigType.Int32, value: 8 },
+        [ConfigKey.Name]: { type: ConfigType.String, value: 'UpdatedApp' },
+        [ConfigKey.PlayerSlot]: { type: ConfigType.Int32, value: 8 },
       };
 
       baseScope
