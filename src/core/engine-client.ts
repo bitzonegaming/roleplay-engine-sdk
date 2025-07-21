@@ -7,6 +7,7 @@ import { EngineError } from './engine-error';
 export type ApiOptions = {
   correlationId?: string;
   characterId?: string;
+  executorUser?: string;
 };
 
 type RequestConfigWithApiOptions = AxiosRequestConfig & ApiOptions;
@@ -150,6 +151,10 @@ export class EngineClient {
 
     if (cfg.characterId) {
       headers.set('x-character-id', cfg.characterId);
+    }
+
+    if (cfg.executorUser) {
+      headers.set('x-executor-user', cfg.executorUser);
     }
 
     return headers;

@@ -15,4 +15,6 @@ export enum AccessPolicy {
   MetricRead = 'account_policy:read:metric',
   LocalizationRead = 'account_policy:read:localization',
   LocalizationWrite = 'account_policy:write:localization',
+  WorldWrite = 'account_policy:write:world',
+  WorldRead = 'account_policy:read:world',
 }

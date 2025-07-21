@@ -113,7 +113,6 @@ describe('ConfigurationApi', () => {
       baseScope.get('/configuration/grouped').query({ onlyPublic: 'true' }).reply(200, mockGroups);
 
       const result = await api.getGroupedConfiguration({ onlyPublic: true });
-
       expect(result).toEqual(mockGroups);
     });
   });

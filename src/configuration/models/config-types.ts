@@ -1,16 +1,12 @@
+import { DPosition, Position } from '../../common/position';
+import { Rotation } from '../../common/rotation';
+
 export interface ConfigGroupToggle {
   enabled: boolean;
 }
 
 export interface ConfigSelectOption {
   key: string;
-}
-
-export interface ConfigPosition {
-  x: number;
-  y: number;
-  z: number;
-  dimension: number;
 }
 
 export interface ConfigSecret {
@@ -29,6 +25,8 @@ export enum ConfigType {
   GroupToggle = 'ServerConfigGroupToggle',
   SelectOption = 'ServerConfigSelectOption',
   Position = 'Position',
+  DPosition = 'DPosition',
+  Rotation = 'Rotation',
   Secret = 'ServerConfigSecret',
   Regex = 'ServerRegexConfig',
 }
@@ -40,7 +38,9 @@ export interface ConfigTypeValueMap {
   [ConfigType.String]: string;
   [ConfigType.GroupToggle]: ConfigGroupToggle;
   [ConfigType.SelectOption]: ConfigSelectOption;
-  [ConfigType.Position]: ConfigPosition;
+  [ConfigType.Position]: Position;
+  [ConfigType.DPosition]: DPosition;
+  [ConfigType.Rotation]: Rotation;
   [ConfigType.Secret]: ConfigSecret;
   [ConfigType.Regex]: ConfigRegex;
 }
@@ -51,6 +51,8 @@ export type ConfigTypes =
   | boolean
   | ConfigGroupToggle
   | ConfigSelectOption
-  | ConfigPosition
+  | Position
+  | DPosition
+  | Rotation
   | ConfigSecret
   | ConfigRegex;
