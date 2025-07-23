@@ -1,8 +1,8 @@
 {
   "name": "@bitzonegaming/roleplay-engine-sdk",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Roleplay Engine SDK",
-  "main": "dist/index.js",
+  "main": "index.js",
   "homepage": "https://bitzone.com",
   "repository": {
     "type": "git",

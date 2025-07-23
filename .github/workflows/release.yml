@@ -44,8 +44,12 @@ jobs:
           echo "tag=latest" >> $GITHUB_OUTPUT
           fi
 
-      # 8) Publish to npm under the chosen tag
+      # 8) Copy package.json into dist
+      - name: Copy package.json into dist
+        run: cp package.json dist/
+
+      # 9) Publish to npm under the chosen tag
       - name: Publish to npm
-        run: npm publish --tag ${{ steps.dist_tag.outputs.tag }}
+        run: npm publish ./dist --tag ${{ steps.dist_tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
