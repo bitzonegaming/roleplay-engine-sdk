@@ -1,8 +1,8 @@
 import { ClientConfigs } from './client-configs';
 import { Authorization } from '../auth/authorization';
 import axios, { AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { randomUUID } from 'node:crypto';
 import { EngineError } from './engine-error';
+import { v4 as uuidV4 } from 'uuid';
 
 export type ApiOptions = {
   correlationId?: string;
@@ -143,7 +143,7 @@ export class EngineClient {
     headers.set('Accept-Language', this.configs.locale);
     headers.set('x-agent-name', this.configs.applicationName);
     headers.set('x-server-id', this.configs.serverId);
-    headers.set('x-correlationid', cfg.correlationId ?? randomUUID().toString());
+    headers.set('x-correlationid', cfg.correlationId ?? uuidV4());
 
     if (this.authorization) {
       headers.set('Authorization', this.authorization.getAuthorizationToken());

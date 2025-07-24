@@ -1,6 +1,6 @@
 {
   "name": "@bitzonegaming/roleplay-engine-sdk",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Roleplay Engine SDK",
   "main": "index.js",
   "homepage": "https://bitzone.com",
@@ -29,7 +29,8 @@
     "node": "^20.0.0"
   },
   "dependencies": {
-    "axios": "^1.10.0"
+    "axios": "^1.10.0",
+    "uuid": "^11.1.0"
   },
   "publishConfig": {
     "access": "public"
@@ -41,6 +42,7 @@
     "@types/jest": "^30.0.0",
     "@types/nock": "^11.1.0",
     "@types/node": "^24.0.13",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "barrelsby": "^2.8.1",

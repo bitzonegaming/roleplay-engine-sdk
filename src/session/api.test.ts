@@ -9,6 +9,7 @@ import { LinkCharacterToSessionRequest } from './models/link-character-to-sessio
 import { Session } from './models/session';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { v4 as uuidV4 } from 'uuid';
 
 describe('SessionApi', () => {
   const apiUrl = 'http://mock-api';
@@ -46,19 +47,20 @@ describe('SessionApi', () => {
   describe('startSession()', () => {
     it('should POST /sessions with correct body and return SessionWithToken', async () => {
       const req: StartSessionRequest = { ipAddress: '192.168.0.1' };
+      const sessionId = uuidV4();
       const mockResp: SessionWithToken = {
-        id: 'session1',
+        id: sessionId,
         token: 'sessionToken123',
       };
 
       baseScope
-        .post('/sessions', (body) => {
+        .post(`/sessions/${sessionId}`, (body) => {
           expect(body).toEqual(req);
           return true;
         })
         .reply(201, mockResp);
 
-      const result = await api.startSession(req);
+      const result = await api.startSession(sessionId, req);
       expect(result).toEqual(mockResp);
     });
   });

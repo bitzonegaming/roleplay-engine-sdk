@@ -1,5 +1,18 @@
 import { AccountSignInMethod } from '../../account/models/account-sign-in-method';
 
+export enum SessionEndReason {
+  SessionInitFailed = 'SESSION_INIT_FAILED',
+  DroppedByServer = 'DROPPED_BY_SERVER',
+  ReplacedByNewSession = 'REPLACED_BY_NEW_SESSION',
+  ConnectionDropped = 'CONNECTION_DROPPED',
+  Crashed = 'CRASHED',
+  PlayerQuit = 'PLAYER_QUIT',
+  KickedByAdmin = 'KICKED_BY_ADMIN',
+  BannedByAdmin = 'BANNED_BY_ADMIN',
+  KickedByServer = 'KICKED_BY_SERVER',
+  BannedByServer = 'BANNED_BY_SERVER',
+}
+
 /**
  *
  * @export
@@ -42,6 +55,18 @@ export interface Session {
    * @memberof Session
    */
   endDate?: number;
+  /**
+   *
+   * @type {SessionEndReason}
+   * @memberof Session
+   */
+  endReason?: SessionEndReason;
+  /**
+   *
+   * @type {string}
+   * @memberof Session
+   */
+  endReasonText?: string;
   /**
    *
    * @type {number}

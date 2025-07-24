@@ -4,7 +4,7 @@ import { SessionWithToken } from './models/session-with-token';
 import { AuthorizeSessionRequest } from './models/authorize-session-request';
 import { SessionInfo } from './models/session-info';
 import { LinkCharacterToSessionRequest } from './models/link-character-to-session-request';
-import { Session } from './models/session';
+import { Session, SessionEndReason } from './models/session';
 
 export class SessionApi {
   constructor(private readonly client: EngineClient) {}
@@ -12,16 +12,18 @@ export class SessionApi {
   /**
    * Starts a new session for the given IP address. This endpoint is used to initiate a session in the game server.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:session_start
    * @summary Start a new session
+   * @param {string} sessionId
    * @param {StartSessionRequest} request
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
   public startSession(
+    sessionId: string,
     request: StartSessionRequest,
     options?: ApiOptions,
   ): Promise<SessionWithToken> {
     return this.client.post<StartSessionRequest, SessionWithToken>({
-      url: 'sessions',
+      url: `sessions/${sessionId}`,
       data: request,
       options,
     });
@@ -71,12 +73,20 @@ export class SessionApi {
    * Finishes a session by its ID. This endpoint is used to end a session in the game server.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:session_finish
    * @summary Finish session
    * @param {string} sessionId
+   * @param {Object} [query]                       Query parameters.
+   * @param {SessionEndReason} [query.endReason]      A code indicating why the session was ended.
+   * @param {string} [query.endReasonText]            A human-readable description of the end reason.
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
-  public finishSession(sessionId: string, options?: ApiOptions): Promise<void> {
+  public finishSession(
+    sessionId: string,
+    query?: { endReason?: SessionEndReason; endReasonText?: string },
+    options?: ApiOptions,
+  ): Promise<void> {
     return this.client.delete<void>({
       url: `sessions/${sessionId}`,
+      query,
       options,
     });
   }
