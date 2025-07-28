@@ -1,8 +1,9 @@
 {
   "name": "@bitzonegaming/roleplay-engine-sdk",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "Roleplay Engine SDK",
   "main": "index.js",
+  "types": "index.d.ts",
   "homepage": "https://bitzone.com",
   "repository": {
     "type": "git",
@@ -34,6 +35,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
