@@ -17,6 +17,12 @@ export type Metric = {
    * @type {string}
    * @memberof Metric
    */
+  categoryReferenceId: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Metric
+   */
   key: string;
   /**
    *

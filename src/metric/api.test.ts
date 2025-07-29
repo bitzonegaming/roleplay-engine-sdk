@@ -45,9 +45,17 @@ describe('MetricApi', () => {
   describe('getMetrics()', () => {
     const mockMetricsPage: PaginatedItems<Metric> = {
       items: [
-        { id: 'm1', key: 'key1', value: 42, valueType: MetricValueType.Number, name: 'Metric1' },
+        {
+          id: 'm1',
+          categoryReferenceId: 'catRefId1',
+          key: 'key1',
+          value: 42,
+          valueType: MetricValueType.Number,
+          name: 'Metric1',
+        },
         {
           id: 'm2',
+          categoryReferenceId: 'catRefId2',
           key: 'key2',
           value: true,
           valueType: MetricValueType.Boolean,

@@ -150,6 +150,7 @@ describe('ReferenceApi', () => {
     const mockMetrics: Metric[] = [
       {
         id: 'm1',
+        categoryReferenceId,
         key: 'score',
         valueType: MetricValueType.Number,
         value: 100,
@@ -158,6 +159,7 @@ describe('ReferenceApi', () => {
       },
       {
         id: 'm2',
+        categoryReferenceId,
         key: 'level',
         subKey: 'current',
         valueType: MetricValueType.String,
@@ -166,6 +168,7 @@ describe('ReferenceApi', () => {
       },
       {
         id: 'm3',
+        categoryReferenceId,
         key: 'active',
         valueType: MetricValueType.Boolean,
         value: true,
