@@ -6,6 +6,8 @@ import { MetricDefinition } from './models/metric-definition';
 import { ReferenceCategory } from '../reference/models/reference-category';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { PaginatedItems } from '../common/paginated-items';
+import { MetricValueType } from './models/metric-value-type';
 
 describe('MetricApi', () => {
   const apiUrl = 'http://mock-api';
@@ -41,42 +43,57 @@ describe('MetricApi', () => {
   });
 
   describe('getMetrics()', () => {
-    const mockMetrics: Metric[] = [
-      { id: 'm1', key: 'key1', value: 42, valueType: 'NUMBER', name: 'Metric1' } as Metric,
-      { id: 'm2', key: 'key2', value: true, valueType: 'BOOLEAN', name: 'Metric2' } as Metric,
-    ];
+    const mockMetricsPage: PaginatedItems<Metric> = {
+      items: [
+        { id: 'm1', key: 'key1', value: 42, valueType: MetricValueType.Number, name: 'Metric1' },
+        {
+          id: 'm2',
+          key: 'key2',
+          value: true,
+          valueType: MetricValueType.Boolean,
+          name: 'Metric2',
+        },
+      ],
+      totalCount: 2,
+      pageCount: 1,
+      pageIndex: 1,
+      pageSize: 10,
+    };
 
-    it('should GET /metrics with all query params including categoryReferenceId', async () => {
-      const categoryReferenceId = 'cat123';
+    it('should GET /metrics with all query params', async () => {
       const query = {
-        fullKeys: ['key1', 'key2'],
-        scope: 'scopeX',
+        category: ReferenceCategory.Account,
         localized: true,
         noCache: false,
+        pageIndex: 1,
+        pageSize: 10,
       };
 
       baseScope
         .get('/metrics')
         .query({
-          categoryReferenceId,
-          fullKeys: 'key1,key2',
-          scope: 'scopeX',
+          category: ReferenceCategory.Account,
           localized: 'true',
           noCache: 'false',
+          pageIndex: '1',
+          pageSize: '10',
         })
-        .reply(200, mockMetrics);
+        .reply(200, mockMetricsPage);
 
-      const result = await api.getMetrics(categoryReferenceId, query);
-      expect(result).toEqual(mockMetrics);
+      const result = await api.getMetrics(query);
+      expect(result).toEqual(mockMetricsPage);
     });
 
-    it('should include only categoryReferenceId when no other query params', async () => {
-      const categoryReferenceId = 'cat456';
+    it('should GET /metrics with only category when no other query params', async () => {
+      const query = { category: ReferenceCategory.Account };
 
-      baseScope.get('/metrics').query({ categoryReferenceId }).reply(200, mockMetrics);
+      baseScope
+        .get('/metrics')
+        .query({ category: ReferenceCategory.Account })
+        .reply(200, mockMetricsPage);
 
-      const result = await api.getMetrics(categoryReferenceId);
-      expect(result).toEqual(mockMetrics);
+      const result = await api.getMetrics(query);
+      expect(result).toEqual(mockMetricsPage);
     });
   });
 

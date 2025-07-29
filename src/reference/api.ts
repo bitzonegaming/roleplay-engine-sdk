@@ -5,6 +5,7 @@ import { Reference } from './models/reference';
 import { PaginationQuery } from '../common/pagination-query';
 import { Segment } from '../segment/models/segment';
 import { ApplySegmentToReferenceRequest } from '../segment/models/apply-segment-to-reference-request';
+import { Metric } from '../metric/models/metric';
 
 export class ReferenceApi {
   constructor(private readonly client: EngineClient) {}
@@ -31,6 +32,34 @@ export class ReferenceApi {
   ): Promise<PaginatedItems<Reference>> {
     return this.client.get<PaginatedItems<Reference>>({
       url: 'references',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * It returns a list of metrics for a reference based on the provided filters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:metric<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:metric<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get reference metrics
+   * @param {string} [categoryReferenceId]        Category reference ID
+   * @param {Object} [query]                      Query parameters
+   * @param {boolean} [query.localized]             If `true`, return localized metric names.
+   * @param {boolean} [query.fullKeys]              Filter metrics by full keys.
+   * @param {boolean} [query.scope]                 Filter metrics by scope.
+   * @param {ApiOptions} [options]                Override HTTP request options.
+   * @throws {EngineError}
+   */
+  public getReferenceMetrics(
+    categoryReferenceId: string,
+    query?: {
+      fullKeys?: string[];
+      scope?: string;
+      localized?: boolean;
+      noCache?: boolean;
+    },
+    options?: ApiOptions,
+  ): Promise<Metric[]> {
+    return this.client.get<Metric[]>({
+      url: `references/${categoryReferenceId}/metrics`,
       query,
       options,
     });

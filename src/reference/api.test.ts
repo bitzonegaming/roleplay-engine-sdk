@@ -9,6 +9,8 @@ import { PaginatedItems } from '../common/paginated-items';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { SegmentTypeCode } from '../segment/models/segment-type';
+import { Metric } from '../metric/models/metric';
+import { MetricValueType } from '../metric/models/metric-value-type';
 
 describe('ReferenceApi', () => {
   const apiUrl = 'http://mock-api';
@@ -140,6 +142,100 @@ describe('ReferenceApi', () => {
 
       const result = await api.getReferenceSegments(categoryReferenceId, { visible: true });
       expect(result).toEqual(mockSegments);
+    });
+  });
+
+  describe('getReferenceMetrics()', () => {
+    const categoryReferenceId = 'cat123';
+    const mockMetrics: Metric[] = [
+      {
+        id: 'm1',
+        key: 'score',
+        valueType: MetricValueType.Number,
+        value: 100,
+        name: 'Player Score',
+        description: 'Current player score',
+      },
+      {
+        id: 'm2',
+        key: 'level',
+        subKey: 'current',
+        valueType: MetricValueType.String,
+        value: 'beginner',
+        name: 'Player Level',
+      },
+      {
+        id: 'm3',
+        key: 'active',
+        valueType: MetricValueType.Boolean,
+        value: true,
+      },
+    ];
+
+    it('should GET /references/:id/metrics with all query params', async () => {
+      const query = {
+        fullKeys: ['score', 'level'],
+        scope: 'player',
+        localized: true,
+        noCache: true,
+      };
+
+      baseScope
+        .get(`/references/${categoryReferenceId}/metrics`)
+        .query({
+          fullKeys: 'score,level',
+          scope: 'player',
+          localized: 'true',
+          noCache: 'true',
+        })
+        .reply(200, mockMetrics);
+
+      const result = await api.getReferenceMetrics(categoryReferenceId, query);
+      expect(result).toEqual(mockMetrics);
+    });
+
+    it('should GET /references/:id/metrics with partial query params', async () => {
+      const query = {
+        localized: false,
+        scope: 'global',
+      };
+
+      baseScope
+        .get(`/references/${categoryReferenceId}/metrics`)
+        .query({
+          localized: 'false',
+          scope: 'global',
+        })
+        .reply(200, mockMetrics);
+
+      const result = await api.getReferenceMetrics(categoryReferenceId, query);
+      expect(result).toEqual(mockMetrics);
+    });
+
+    it('should GET /references/:id/metrics without query params', async () => {
+      baseScope.get(`/references/${categoryReferenceId}/metrics`).reply(200, mockMetrics);
+
+      const result = await api.getReferenceMetrics(categoryReferenceId);
+      expect(result).toEqual(mockMetrics);
+    });
+
+    it('should GET /references/:id/metrics with only fullKeys', async () => {
+      const query = { fullKeys: ['score'] };
+
+      baseScope
+        .get(`/references/${categoryReferenceId}/metrics`)
+        .query({ fullKeys: 'score' })
+        .reply(200, [mockMetrics[0]]);
+
+      const result = await api.getReferenceMetrics(categoryReferenceId, query);
+      expect(result).toEqual([mockMetrics[0]]);
+    });
+
+    it('should handle empty metrics array', async () => {
+      baseScope.get(`/references/${categoryReferenceId}/metrics`).reply(200, []);
+
+      const result = await api.getReferenceMetrics(categoryReferenceId);
+      expect(result).toEqual([]);
     });
   });
 
