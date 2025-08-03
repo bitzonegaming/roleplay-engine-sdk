@@ -8,6 +8,7 @@ import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { PaginatedItems } from '../common/paginated-items';
 import { MetricValueType } from './models/metric-value-type';
+import { MetricMainKey } from './models/metric-main-key';
 
 describe('MetricApi', () => {
   const apiUrl = 'http://mock-api';
@@ -48,7 +49,7 @@ describe('MetricApi', () => {
         {
           id: 'm1',
           categoryReferenceId: 'catRefId1',
-          key: 'key1',
+          key: MetricMainKey.Age,
           value: 42,
           valueType: MetricValueType.Number,
           name: 'Metric1',
@@ -56,7 +57,7 @@ describe('MetricApi', () => {
         {
           id: 'm2',
           categoryReferenceId: 'catRefId2',
-          key: 'key2',
+          key: MetricMainKey.EmailVerified,
           value: true,
           valueType: MetricValueType.Boolean,
           name: 'Metric2',

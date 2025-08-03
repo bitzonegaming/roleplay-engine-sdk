@@ -11,6 +11,7 @@ import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { SegmentTypeCode } from '../segment/models/segment-type';
 import { Metric } from '../metric/models/metric';
 import { MetricValueType } from '../metric/models/metric-value-type';
+import { MetricMainKey } from '../metric/models/metric-main-key';
 
 describe('ReferenceApi', () => {
   const apiUrl = 'http://mock-api';
@@ -180,7 +181,7 @@ describe('ReferenceApi', () => {
       {
         id: 'm1',
         categoryReferenceId,
-        key: 'score',
+        key: MetricMainKey.Age,
         valueType: MetricValueType.Number,
         value: 100,
         name: 'Player Score',
@@ -189,7 +190,7 @@ describe('ReferenceApi', () => {
       {
         id: 'm2',
         categoryReferenceId,
-        key: 'level',
+        key: MetricMainKey.Gender,
         subKey: 'current',
         valueType: MetricValueType.String,
         value: 'beginner',
@@ -198,7 +199,7 @@ describe('ReferenceApi', () => {
       {
         id: 'm3',
         categoryReferenceId,
-        key: 'active',
+        key: MetricMainKey.Age,
         valueType: MetricValueType.Boolean,
         value: true,
       },

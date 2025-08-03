@@ -1,5 +1,6 @@
 import { MetricScopeDefinition } from './metric-scope-definition';
 import { MetricValueType } from './metric-value-type';
+import { MetricMainKey } from './metric-main-key';
 
 /**
  * @export
@@ -20,10 +21,10 @@ export type Metric = {
   categoryReferenceId: string;
   /**
    *
-   * @type {string}
+   * @type {MetricMainKey}
    * @memberof Metric
    */
-  key: string;
+  key: MetricMainKey;
   /**
    *
    * @type {string}
