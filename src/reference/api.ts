@@ -38,6 +38,27 @@ export class ReferenceApi {
   }
 
   /**
+   * It returns a reference by its ID.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key]<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get reference by ID
+   * @param {string} categoryReferenceId
+   * @param {Object} [query] Query parameters
+   * @param {boolean} [query.noCache]
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getReferenceById(
+    categoryReferenceId: string,
+    query?: { noCache?: boolean },
+    options?: ApiOptions,
+  ): Promise<Reference> {
+    return this.client.get<Reference>({
+      url: `references/${categoryReferenceId}`,
+      query,
+      options,
+    });
+  }
+
+  /**
    * It returns a list of metrics for a reference based on the provided filters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:metric<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:metric<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get reference metrics
    * @param {string} [categoryReferenceId]        Category reference ID

@@ -1,6 +1,6 @@
 {
   "name": "@bitzonegaming/roleplay-engine-sdk",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Roleplay Engine SDK",
   "main": "index.js",
   "types": "index.d.ts",

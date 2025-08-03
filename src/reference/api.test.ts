@@ -97,6 +97,35 @@ describe('ReferenceApi', () => {
     });
   });
 
+  describe('getReferenceById()', () => {
+    const categoryReferenceId = 'account:123';
+    const mockReference: Reference = {
+      id: 'r1',
+      name: 'RefOne',
+      category: ReferenceCategory.Account,
+      categoryName: 'Account',
+      referenceId: 'ref1',
+      enabled: true,
+    };
+
+    it('should GET /references/:id with noCache query param', async () => {
+      baseScope
+        .get(`/references/${categoryReferenceId}`)
+        .query({ noCache: 'true' })
+        .reply(200, mockReference);
+
+      const result = await api.getReferenceById(categoryReferenceId, { noCache: true });
+      expect(result).toEqual(mockReference);
+    });
+
+    it('should GET /references/:id without query params', async () => {
+      baseScope.get(`/references/${categoryReferenceId}`).reply(200, mockReference);
+
+      const result = await api.getReferenceById(categoryReferenceId);
+      expect(result).toEqual(mockReference);
+    });
+  });
+
   describe('getReferenceSegments()', () => {
     const categoryReferenceId = 'cat123';
     const mockSegments: Segment[] = [
