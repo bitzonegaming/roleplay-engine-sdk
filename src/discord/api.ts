@@ -3,6 +3,8 @@ import { DiscordUserAccountInfo } from './models/discord-user-account-info';
 import { ImplicitDiscordAuthRequest } from './models/implicit-discord-auth-request';
 import { GrantAccessResult } from '../account/models/grant-access-result';
 import { DiscordOAuthTokenRequest } from './models/discord-oauth-token-request';
+import { DiscordOAuthRedirectType } from './models/discord-oauth-redirect-type';
+import { RedirectUri } from '../common/redirect-uri';
 
 export class DiscordApi {
   constructor(private readonly client: EngineClient) {}
@@ -56,6 +58,23 @@ export class DiscordApi {
     return this.client.post<DiscordOAuthTokenRequest, GrantAccessResult>({
       url: `discord/oauth/token`,
       data: request,
+      options,
+    });
+  }
+
+  /**
+   * This endpoint retrieves the OAuth authorization URL for Discord. It is used to initiate the OAuth flow for players to grant access to their Discord account. <br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:player_auth
+   * @summary Authorize with Discord OAuth token
+   * @param {DiscordOAuthRedirectType} redirectType
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getDiscordOAuthAuthorizeUrl(
+    redirectType: DiscordOAuthRedirectType,
+    options?: ApiOptions,
+  ): Promise<RedirectUri> {
+    return this.client.get<RedirectUri>({
+      url: `discord/oauth/authorize?redirectType=${redirectType}`,
       options,
     });
   }

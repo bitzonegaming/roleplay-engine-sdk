@@ -8,6 +8,7 @@ import { GrantAccessResult } from '../account/models/grant-access-result';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { DiscordOAuthRedirectType } from './models/discord-oauth-redirect-type';
+import { RedirectUri } from '../common/redirect-uri';
 
 describe('DiscordApi', () => {
   const apiUrl = 'http://mock-api';
@@ -113,6 +114,53 @@ describe('DiscordApi', () => {
       const result = await api.authOAuthFlow(req);
 
       expect(result).toEqual(mockGrant);
+    });
+  });
+
+  describe('getDiscordOAuthAuthorizeUrl()', () => {
+    it('should get Discord OAuth authorize URL for GAME redirect type', async () => {
+      const redirectType = DiscordOAuthRedirectType.Game;
+      const mockResponse: RedirectUri = {
+        uri: 'https://discord.com/api/oauth2/authorize?client_id=123&redirect_uri=http://localhost:3000/auth/discord&response_type=code&scope=identify',
+      };
+
+      baseScope
+        .get(`/discord/oauth/authorize?redirectType=${redirectType}`)
+        .reply(200, mockResponse);
+
+      const result = await api.getDiscordOAuthAuthorizeUrl(redirectType);
+
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should get Discord OAuth authorize URL for SCP redirect type', async () => {
+      const redirectType = DiscordOAuthRedirectType.SCP;
+      const mockResponse: RedirectUri = {
+        uri: 'https://discord.com/api/oauth2/authorize?client_id=456&redirect_uri=http://localhost:3000/scp/auth/discord&response_type=code&scope=identify',
+      };
+
+      baseScope
+        .get(`/discord/oauth/authorize?redirectType=${redirectType}`)
+        .reply(200, mockResponse);
+
+      const result = await api.getDiscordOAuthAuthorizeUrl(redirectType);
+
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      const redirectType = DiscordOAuthRedirectType.Game;
+      const mockResponse: RedirectUri = {
+        uri: 'https://discord.com/api/oauth2/authorize?client_id=123&redirect_uri=http://localhost:3000/auth/discord&response_type=code&scope=identify',
+      };
+
+      baseScope
+        .get(`/discord/oauth/authorize?redirectType=${redirectType}`)
+        .reply(200, mockResponse);
+
+      const result = await api.getDiscordOAuthAuthorizeUrl(redirectType);
+
+      expect(result).toEqual(mockResponse);
     });
   });
 });
