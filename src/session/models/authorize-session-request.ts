@@ -9,5 +9,5 @@ export interface AuthorizeSessionRequest {
    * @type {string}
    * @memberof AuthorizeSessionRequest
    */
-  accessToken: string | null;
+  accessToken: string;
 }

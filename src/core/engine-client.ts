@@ -10,7 +10,7 @@ export type ApiOptions = {
   executorUser?: string;
 };
 
-type RequestConfigWithApiOptions = AxiosRequestConfig & ApiOptions;
+export type RequestConfigWithApiOptions = AxiosRequestConfig & ApiOptions;
 export type RequestConfig = Omit<RequestConfigWithApiOptions, 'url' | 'method'>;
 
 export class EngineClient {
