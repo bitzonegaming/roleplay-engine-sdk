@@ -17,9 +17,18 @@ export interface ConfigRegex {
   expression: string;
 }
 
+export interface ConfigColor {
+  hex: string;
+}
+
+export interface ConfigImage {
+  url: string;
+}
+
 export enum ConfigType {
   Int32 = 'Int32',
   Int64 = 'Int64',
+  Decimal = 'Decimal',
   Boolean = 'Boolean',
   String = 'String',
   GroupToggle = 'ServerConfigGroupToggle',
@@ -29,11 +38,14 @@ export enum ConfigType {
   Rotation = 'Rotation',
   Secret = 'ServerConfigSecret',
   Regex = 'ServerRegexConfig',
+  Color = 'ServerConfigColor',
+  Image = 'ServerConfigImage',
 }
 
 export interface ConfigTypeValueMap {
   [ConfigType.Int32]: number;
   [ConfigType.Int64]: number;
+  [ConfigType.Decimal]: number;
   [ConfigType.Boolean]: boolean;
   [ConfigType.String]: string;
   [ConfigType.GroupToggle]: ConfigGroupToggle;
@@ -43,6 +55,8 @@ export interface ConfigTypeValueMap {
   [ConfigType.Rotation]: Rotation;
   [ConfigType.Secret]: ConfigSecret;
   [ConfigType.Regex]: ConfigRegex;
+  [ConfigType.Color]: ConfigColor;
+  [ConfigType.Image]: ConfigImage;
 }
 
 export type ConfigTypes =
@@ -55,4 +69,6 @@ export type ConfigTypes =
   | DPosition
   | Rotation
   | ConfigSecret
-  | ConfigRegex;
+  | ConfigRegex
+  | ConfigColor
+  | ConfigImage;

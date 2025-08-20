@@ -4,12 +4,11 @@ import { Locale } from '../locale/models/locale';
 import { Localization } from '../localization/models/localization';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
-import { DiscordOAuthRedirectType } from '../discord/models/discord-oauth-redirect-type';
-import { RedirectUri } from '../common/redirect-uri';
 import { ResendEmailVerificationRequest } from './models/resend-email-verification-request';
 import { VerifyEmailRequest } from './models/verify-email-request';
 import { ForgotPasswordRequest } from './models/forgot-password-request';
 import { ResetPasswordRequest } from './models/reset-password-request';
+import { ServerTemplate } from '../template/models/server-template';
 
 export class PublicApi {
   constructor(private readonly client: EngineClient) {}
@@ -64,24 +63,6 @@ export class PublicApi {
   public getCharacterNationalities(options?: ApiOptions): Promise<CharacterNationality[]> {
     return this.client.get<CharacterNationality[]>({
       url: 'public/characters/nationalities',
-      options,
-    });
-  }
-
-  /**
-   * This endpoint retrieves the OAuth authorization URL for Discord. It is used to initiate the OAuth flow for players to grant access to their Discord account.
-   * @summary Get Discord OAuth authorize URL
-   * @param {DiscordOAuthRedirectType} [redirectType]
-   * @param {*} [options] Override http request option.
-   * @throws {EngineError}
-   */
-  public getDiscordOAuthAuthorizeUrl(
-    redirectType: DiscordOAuthRedirectType,
-    options?: ApiOptions,
-  ): Promise<RedirectUri> {
-    return this.client.get<RedirectUri>({
-      url: 'public/discord/oauth/authorize',
-      query: { redirectType },
       options,
     });
   }
@@ -145,6 +126,19 @@ export class PublicApi {
     return this.client.put<ResetPasswordRequest, void>({
       url: 'public/accounts/password-resets',
       data: request,
+      options,
+    });
+  }
+
+  /**
+   * It returns a list of templates for the server.
+   * @summary Get public templates
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getTemplates(options?: ApiOptions): Promise<ReadonlyArray<ServerTemplate>> {
+    return this.client.get<ReadonlyArray<ServerTemplate>>({
+      url: 'public/templates',
       options,
     });
   }

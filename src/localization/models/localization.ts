@@ -1,3 +1,5 @@
+import { TemplateCategory } from '../../template/models/template-category';
+
 export interface DefaultNameTranslation {
   name: string;
 }
@@ -16,6 +18,17 @@ export interface ErrorTranslation {
   message: string;
   description: string;
   parameters: { key: string; description: string; example: string }[];
+}
+
+export interface TemplateTextTranslation {
+  message: string;
+  description: string;
+  parameters: { key: string; description: string; example: string }[];
+}
+
+export interface TemplateConfigTranslation {
+  message: string;
+  description: string;
 }
 
 export interface Localization {
@@ -84,6 +97,18 @@ export interface Localization {
       };
       configTypes?: {
         [key: string]: DefaultNameTranslation;
+      };
+    };
+    templates?: {
+      [templateId: string]: {
+        [category in TemplateCategory]: {
+          TEXTS: {
+            [key: string]: TemplateTextTranslation;
+          };
+          CONFIGURATION: {
+            [key: string]: TemplateConfigTranslation;
+          };
+        };
       };
     };
   };

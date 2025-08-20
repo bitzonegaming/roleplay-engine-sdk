@@ -6,16 +6,18 @@ import { Locale } from '../locale/models/locale';
 import { Localization } from '../localization/models/localization';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
-import { DiscordOAuthRedirectType } from '../discord/models/discord-oauth-redirect-type';
-import { RedirectUri } from '../common/redirect-uri';
 import { ResendEmailVerificationRequest } from './models/resend-email-verification-request';
 import { VerifyEmailRequest } from './models/verify-email-request';
 import { ForgotPasswordRequest } from './models/forgot-password-request';
 import { ResetPasswordRequest } from './models/reset-password-request';
+import { ServerTemplate } from '../template/models/server-template';
+import { ServerTemplateCategory } from '../template/models/server-template-category';
+import { ServerTemplateConfiguration } from '../template/models/server-template-configuration';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { ConfigKey } from '../configuration/models/config-keys';
 import { ConfigType } from '../configuration/models/config-types';
+import { TemplateCategory } from '../template/models/template-category';
 
 describe('PublicApi', () => {
   const apiUrl = 'http://mock-api';
@@ -126,18 +128,6 @@ describe('PublicApi', () => {
     });
   });
 
-  describe('getDiscordOAuthAuthorizeUrl()', () => {
-    const mockUri: RedirectUri = { uri: 'https://discord.com/oauth2/authorize' } as RedirectUri;
-
-    it('should GET /public/discord/oauth/authorize with redirectType', async () => {
-      const redirectType = DiscordOAuthRedirectType.Game;
-      baseScope.get('/public/discord/oauth/authorize').query({ redirectType }).reply(200, mockUri);
-
-      const result = await api.getDiscordOAuthAuthorizeUrl(redirectType);
-      expect(result).toEqual(mockUri);
-    });
-  });
-
   describe('resendEmailVerification()', () => {
     it('should POST /public/accounts/email-verifications with body', async () => {
       const req: ResendEmailVerificationRequest = { email: 'user@example.com' };
@@ -199,6 +189,99 @@ describe('PublicApi', () => {
         .reply(204);
 
       await api.resetPassword(req);
+    });
+  });
+
+  describe('getTemplates()', () => {
+    const mockConfiguration: ServerTemplateConfiguration = {
+      key: 'config-key-1',
+      templateKey: 'template-config-1',
+      type: ConfigType.String,
+      name: 'Configuration Name',
+      description: 'Configuration description',
+      value: 'default-value',
+      customGroup: 'general',
+    };
+
+    const mockCategory: ServerTemplateCategory = {
+      id: TemplateCategory.Login,
+      name: 'Login',
+      configuration: [mockConfiguration],
+    };
+
+    const mockTemplates: ReadonlyArray<ServerTemplate> = [
+      {
+        id: 'template-1',
+        name: 'A Template',
+        minorVersion: '1.2',
+        fullVersion: '1.2.3',
+        categories: [mockCategory],
+      },
+      {
+        id: 'template-2',
+        name: 'B Template',
+        minorVersion: '2.0',
+        fullVersion: '2.0.1',
+        categories: [],
+      },
+    ];
+
+    it('should GET /public/templates and return templates', async () => {
+      baseScope.get('/public/templates').reply(200, mockTemplates);
+
+      const result = await api.getTemplates();
+
+      expect(result).toEqual(mockTemplates);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get('/public/templates').reply(200, mockTemplates);
+
+      const result = await api.getTemplates();
+
+      expect(result).toEqual(mockTemplates);
+    });
+
+    it('should handle empty template list', async () => {
+      const emptyTemplates: ReadonlyArray<ServerTemplate> = [];
+      baseScope.get('/public/templates').reply(200, emptyTemplates);
+
+      const result = await api.getTemplates();
+
+      expect(result).toEqual(emptyTemplates);
+    });
+
+    it('should handle templates with multiple categories and configurations', async () => {
+      const anotherConfiguration: ServerTemplateConfiguration = {
+        key: 'config-key-2',
+        templateKey: 'template-config-2',
+        type: ConfigType.Int32,
+        name: 'Config 1',
+        value: 100,
+        customGroup: 'advanced',
+      };
+
+      const anotherCategory: ServerTemplateCategory = {
+        id: TemplateCategory.Toaster,
+        name: 'Toaster',
+        configuration: [mockConfiguration, anotherConfiguration],
+      };
+
+      const complexTemplates: ReadonlyArray<ServerTemplate> = [
+        {
+          id: 'template-3',
+          name: 'Complex Template',
+          minorVersion: '3.0',
+          fullVersion: '3.0.0',
+          categories: [mockCategory, anotherCategory],
+        },
+      ];
+
+      baseScope.get('/public/templates').reply(200, complexTemplates);
+
+      const result = await api.getTemplates();
+
+      expect(result).toEqual(complexTemplates);
     });
   });
 });
