@@ -10,7 +10,8 @@ export class ApiKeyAuthorization extends Authorization {
 
   getAuthorizationToken(): string {
     const raw = `${this.apiKeyId}:${this.apiKeySecret}`;
-    const base64 = Buffer.from(raw, 'utf8').toString('base64');
+    const base64 =
+      typeof btoa !== 'undefined' ? btoa(raw) : Buffer.from(raw, 'utf8').toString('base64');
     return `Basic ${base64}`;
   }
 }
