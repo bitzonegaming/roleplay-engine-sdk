@@ -31,85 +31,87 @@ export interface TemplateConfigTranslation {
   description: string;
 }
 
-export interface Localization {
-  [locale: string]: {
-    errors?: {
-      [key: string]: ErrorTranslation;
+export interface LocalizationData {
+  errors?: {
+    [key: string]: ErrorTranslation;
+  };
+  locales?: {
+    [key: string]: DefaultNameTranslation;
+  };
+  metrics?: {
+    definitions?: {
+      [key: string]: DefaultNameDescriptionTranslation;
     };
-    locales?: {
+    scopes?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+  };
+  texts?: {
+    [key: string]: TextTranslation;
+  };
+  character?: {
+    nationalities?: {
       [key: string]: DefaultNameTranslation;
     };
-    metrics?: {
-      definitions?: {
+    genders: {
+      [key: string]: DefaultNameTranslation;
+    };
+  };
+  segment?: {
+    definitions?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    policy?: {
+      accessPolicyGroups?: {
         [key: string]: DefaultNameDescriptionTranslation;
       };
-      scopes?: {
+      accessPolicies?: {
+        [key: string]: DefaultNameDescriptionTranslation;
+      };
+      types?: {
         [key: string]: DefaultNameDescriptionTranslation;
       };
     };
-    texts?: {
-      [key: string]: TextTranslation;
+  };
+  reference?: {
+    categories?: {
+      [key: string]: DefaultNameTranslation;
     };
-    character?: {
-      nationalities?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      genders: {
-        [key: string]: DefaultNameTranslation;
-      };
+  };
+  blueprint?: {
+    sections?: {
+      [key: string]: DefaultNameTranslation;
     };
-    segment?: {
-      definitions?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      policy?: {
-        accessPolicyGroups?: {
-          [key: string]: DefaultNameDescriptionTranslation;
+    configs?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    colors?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    options?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    categories?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    configTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+  };
+  templates?: {
+    [templateId: string]: {
+      [category in TemplateCategory]: {
+        TEXTS: {
+          [key: string]: TemplateTextTranslation;
         };
-        accessPolicies?: {
-          [key: string]: DefaultNameDescriptionTranslation;
-        };
-        types?: {
-          [key: string]: DefaultNameDescriptionTranslation;
-        };
-      };
-    };
-    reference?: {
-      categories?: {
-        [key: string]: DefaultNameTranslation;
-      };
-    };
-    blueprint?: {
-      sections?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      configs?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      colors?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      options?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      categories?: {
-        [key: string]: DefaultNameTranslation;
-      };
-      configTypes?: {
-        [key: string]: DefaultNameTranslation;
-      };
-    };
-    templates?: {
-      [templateId: string]: {
-        [category in TemplateCategory]: {
-          TEXTS: {
-            [key: string]: TemplateTextTranslation;
-          };
-          CONFIGURATION: {
-            [key: string]: TemplateConfigTranslation;
-          };
+        CONFIGURATION: {
+          [key: string]: TemplateConfigTranslation;
         };
       };
     };
   };
+}
+
+export interface Localization {
+  [locale: string]: LocalizationData;
 }

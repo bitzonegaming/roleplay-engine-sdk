@@ -1,7 +1,7 @@
 import { ApiOptions, EngineClient } from '../core/engine-client';
 import { PublicConfig } from './models/public-config';
 import { Locale } from '../locale/models/locale';
-import { Localization } from '../localization/models/localization';
+import { Localization, LocalizationData } from '../localization/models/localization';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
 import { ResendEmailVerificationRequest } from './models/resend-email-verification-request';
@@ -40,7 +40,7 @@ export class PublicApi {
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
-  public getLocalization(path?: string, options?: ApiOptions): Promise<Localization> {
+  public getLocalization(path?: string, options?: ApiOptions): Promise<LocalizationData> {
     return this.client.get<Localization>({ url: 'public/localization', query: { path }, options });
   }
 
