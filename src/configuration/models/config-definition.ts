@@ -20,6 +20,9 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.SmtpVerificationEmailAccountFromMail]: string;
   [ConfigKey.SmtpVerificationEmailAccountFromName]: string;
 
+  // WORLD - CAMERA
+  [ConfigKey.LoginScreenCamera]: ConfigSelectOption;
+
   // ACCOUNT - AUTH
   [ConfigKey.AccountEmailRequired]: boolean;
   [ConfigKey.AccountUsernameRegex]: ConfigRegex;
