@@ -12,6 +12,7 @@ export interface DefaultNameDescriptionTranslation {
 export interface TextTranslation {
   message: string;
   description?: string;
+  parameters: { key: string; description: string; example: string }[];
 }
 
 export interface ErrorTranslation {
